@@ -1,0 +1,71 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyFramework", "Framework_2010.vcxproj", "{D3D09108-96D0-4629-88B8-122C0256058C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9F64786D-4F8F-43BF-ADA0-133ABAE1E52D} = {9F64786D-4F8F-43BF-ADA0-133ABAE1E52D}
+		{E0CF097B-F22D-465B-A884-D89E55BD7ECD} = {E0CF097B-F22D-465B-A884-D89E55BD7ECD}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DXUT", "DXUT", "{BDA841A8-41DC-4042-895A-271EA60BAAEC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DXUT", "..\DXUT\Core\DXUT_2010.vcxproj", "{E0CF097B-F22D-465B-A884-D89E55BD7ECD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DXUTOpt", "..\DXUT\Optional\DXUTOpt_2010.vcxproj", "{9F64786D-4F8F-43BF-ADA0-133ABAE1E52D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Profile|Win32 = Profile|Win32
+		Profile|x64 = Profile|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D3D09108-96D0-4629-88B8-122C0256058C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D3D09108-96D0-4629-88B8-122C0256058C}.Debug|Win32.Build.0 = Debug|Win32
+		{D3D09108-96D0-4629-88B8-122C0256058C}.Debug|x64.ActiveCfg = Debug|x64
+		{D3D09108-96D0-4629-88B8-122C0256058C}.Debug|x64.Build.0 = Debug|x64
+		{D3D09108-96D0-4629-88B8-122C0256058C}.Profile|Win32.ActiveCfg = Profile|Win32
+		{D3D09108-96D0-4629-88B8-122C0256058C}.Profile|Win32.Build.0 = Profile|Win32
+		{D3D09108-96D0-4629-88B8-122C0256058C}.Profile|x64.ActiveCfg = Profile|x64
+		{D3D09108-96D0-4629-88B8-122C0256058C}.Profile|x64.Build.0 = Profile|x64
+		{D3D09108-96D0-4629-88B8-122C0256058C}.Release|Win32.ActiveCfg = Release|Win32
+		{D3D09108-96D0-4629-88B8-122C0256058C}.Release|Win32.Build.0 = Release|Win32
+		{D3D09108-96D0-4629-88B8-122C0256058C}.Release|x64.ActiveCfg = Release|x64
+		{D3D09108-96D0-4629-88B8-122C0256058C}.Release|x64.Build.0 = Release|x64
+		{E0CF097B-F22D-465B-A884-D89E55BD7ECD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E0CF097B-F22D-465B-A884-D89E55BD7ECD}.Debug|Win32.Build.0 = Debug|Win32
+		{E0CF097B-F22D-465B-A884-D89E55BD7ECD}.Debug|x64.ActiveCfg = Debug|x64
+		{E0CF097B-F22D-465B-A884-D89E55BD7ECD}.Debug|x64.Build.0 = Debug|x64
+		{E0CF097B-F22D-465B-A884-D89E55BD7ECD}.Profile|Win32.ActiveCfg = Profile|Win32
+		{E0CF097B-F22D-465B-A884-D89E55BD7ECD}.Profile|Win32.Build.0 = Profile|Win32
+		{E0CF097B-F22D-465B-A884-D89E55BD7ECD}.Profile|x64.ActiveCfg = Profile|x64
+		{E0CF097B-F22D-465B-A884-D89E55BD7ECD}.Profile|x64.Build.0 = Profile|x64
+		{E0CF097B-F22D-465B-A884-D89E55BD7ECD}.Release|Win32.ActiveCfg = Release|Win32
+		{E0CF097B-F22D-465B-A884-D89E55BD7ECD}.Release|Win32.Build.0 = Release|Win32
+		{E0CF097B-F22D-465B-A884-D89E55BD7ECD}.Release|x64.ActiveCfg = Release|x64
+		{E0CF097B-F22D-465B-A884-D89E55BD7ECD}.Release|x64.Build.0 = Release|x64
+		{9F64786D-4F8F-43BF-ADA0-133ABAE1E52D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9F64786D-4F8F-43BF-ADA0-133ABAE1E52D}.Debug|Win32.Build.0 = Debug|Win32
+		{9F64786D-4F8F-43BF-ADA0-133ABAE1E52D}.Debug|x64.ActiveCfg = Debug|x64
+		{9F64786D-4F8F-43BF-ADA0-133ABAE1E52D}.Debug|x64.Build.0 = Debug|x64
+		{9F64786D-4F8F-43BF-ADA0-133ABAE1E52D}.Profile|Win32.ActiveCfg = Profile|Win32
+		{9F64786D-4F8F-43BF-ADA0-133ABAE1E52D}.Profile|Win32.Build.0 = Profile|Win32
+		{9F64786D-4F8F-43BF-ADA0-133ABAE1E52D}.Profile|x64.ActiveCfg = Profile|x64
+		{9F64786D-4F8F-43BF-ADA0-133ABAE1E52D}.Profile|x64.Build.0 = Profile|x64
+		{9F64786D-4F8F-43BF-ADA0-133ABAE1E52D}.Release|Win32.ActiveCfg = Release|Win32
+		{9F64786D-4F8F-43BF-ADA0-133ABAE1E52D}.Release|Win32.Build.0 = Release|Win32
+		{9F64786D-4F8F-43BF-ADA0-133ABAE1E52D}.Release|x64.ActiveCfg = Release|x64
+		{9F64786D-4F8F-43BF-ADA0-133ABAE1E52D}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E0CF097B-F22D-465B-A884-D89E55BD7ECD} = {BDA841A8-41DC-4042-895A-271EA60BAAEC}
+		{9F64786D-4F8F-43BF-ADA0-133ABAE1E52D} = {BDA841A8-41DC-4042-895A-271EA60BAAEC}
+	EndGlobalSection
+EndGlobal
