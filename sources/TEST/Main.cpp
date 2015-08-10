@@ -4,6 +4,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
 #include "DXUT.h"
+#include "DXUTcamera.h"
+
+LPD3DXMESH			g_pMesh = NULL;
+CModelViewerCamera	g_Camera;
 
 //--------------------------------------------------------------------------------------
 // Rejects any D3D9 devices that aren't acceptable to the app by returning false
@@ -38,6 +42,14 @@ bool CALLBACK ModifyDeviceSettings(DXUTDeviceSettings* pDeviceSettings, void* pU
 HRESULT CALLBACK OnD3D9CreateDevice(IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
 	void* pUserContext)
 {
+
+	// 카메라 설정
+	D3DXVECTOR3 vEye = D3DXVECTOR3(0.0f, 0.0f, -5.0f);
+	D3DXVECTOR3 vLookAt = D3DXVECTOR3(0.0f, 0.0f, -0.0f);
+	g_Camera.SetViewParams(&vEye, &vLookAt);
+
+	// 렌더링은 와이어프레임으로
+	pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	return S_OK;
 }
 
@@ -49,6 +61,19 @@ HRESULT CALLBACK OnD3D9CreateDevice(IDirect3DDevice9* pd3dDevice, const D3DSURFA
 HRESULT CALLBACK OnD3D9ResetDevice(IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
 	void* pUserContext)
 {
+	HRESULT hr;
+
+	// 카메라 투영행렬 설정
+	float fAspectRatio = pBackBufferSurfaceDesc->Width
+		/ (FLOAT)pBackBufferSurfaceDesc->Height;
+	g_Camera.SetProjParams(D3DX_PI / 4, fAspectRatio, 0.1f, 1000.0f);
+	g_Camera.SetWindow(pBackBufferSurfaceDesc->Width,
+		pBackBufferSurfaceDesc->Height);
+	V(pd3dDevice->SetTransform(D3DTS_PROJECTION, g_Camera.GetProjMatrix()));
+
+	// 상자 오브젝트 생성
+	V_RETURN(D3DXCreateBox(pd3dDevice, 1.0f, 1.0f, 1.0f, &g_pMesh, 0));
+
 	return S_OK;
 }
 
@@ -58,6 +83,7 @@ HRESULT CALLBACK OnD3D9ResetDevice(IDirect3DDevice9* pd3dDevice, const D3DSURFAC
 //--------------------------------------------------------------------------------------
 void CALLBACK OnFrameMove(double fTime, float fElapsedTime, void* pUserContext)
 {
+	g_Camera.FrameMove(fElapsedTime);
 }
 
 
@@ -71,9 +97,15 @@ void CALLBACK OnD3D9FrameRender(IDirect3DDevice9* pd3dDevice, double fTime, floa
 	// Clear the render target and the zbuffer 
 	V(pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 45, 50, 170), 1.0f, 0));
 
+	// 카메라 행렬 적용
+	V(pd3dDevice->SetTransform(D3DTS_WORLD, g_Camera.GetWorldMatrix()));
+	V(pd3dDevice->SetTransform(D3DTS_VIEW, g_Camera.GetViewMatrix()));
+
 	// Render the scene
 	if (SUCCEEDED(pd3dDevice->BeginScene()))
 	{
+
+		g_pMesh->DrawSubset(0);
 		V(pd3dDevice->EndScene());
 	}
 }
@@ -85,7 +117,7 @@ void CALLBACK OnD3D9FrameRender(IDirect3DDevice9* pd3dDevice, double fTime, floa
 LRESULT CALLBACK MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,
 	bool* pbNoFurtherProcessing, void* pUserContext)
 {
-	return 0;
+	return g_Camera.HandleMessages(hWnd, uMsg, wParam, lParam);
 }
 
 
@@ -94,6 +126,7 @@ LRESULT CALLBACK MsgProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,
 //--------------------------------------------------------------------------------------
 void CALLBACK OnD3D9LostDevice(void* pUserContext)
 {
+	SAFE_RELEASE(g_pMesh);
 }
 
 
@@ -102,6 +135,7 @@ void CALLBACK OnD3D9LostDevice(void* pUserContext)
 //--------------------------------------------------------------------------------------
 void CALLBACK OnD3D9DestroyDevice(void* pUserContext)
 {
+	SAFE_RELEASE(g_pMesh);
 }
 
 
@@ -132,10 +166,10 @@ INT WINAPI wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
 	DXUTInit(true, true); // Parse the command line and show msgboxes
 	DXUTSetHotkeyHandling(true, true, true);  // handle the default hotkeys
 	DXUTSetCursorSettings(true, true); // Show the cursor and clip it when in full screen
-	HICON hIcon = (HICON)LoadImage(NULL, L"..\\..\\assets\\Icon\\GameIcon.ico", IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
+	HICON hIcon = (HICON)LoadImage(NULL, L"Icon\\GameIcon.ico", IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
 
 	DXUTCreateWindow(L"TEST", NULL, hIcon);
-	DXUTCreateDevice(true, 640, 480);
+	DXUTCreateDevice(true, 1024, 768);
 
 	// Start the render loop
 	DXUTMainLoop();

@@ -134,7 +134,7 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )
     DXUTInit( true, true ); // Parse the command line and show msgboxes
     DXUTSetHotkeyHandling( true, true, true );  // handle the default hotkeys
 	DXUTSetCursorSettings(true, true); // Show the cursor and clip it when in full screen
-	HICON hIcon = (HICON)LoadImage(NULL, L"..\\..\\assets\\Icon\\icon2.ico", IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
+	HICON hIcon = (HICON)LoadImage(NULL, L"Icon\\icon2.ico", IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
 	
     DXUTCreateWindow( L"Framework" ,NULL,hIcon );
     DXUTCreateDevice( true, 640, 480 );

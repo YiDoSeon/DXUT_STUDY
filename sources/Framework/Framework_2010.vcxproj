@@ -89,7 +89,7 @@
     <ExecutablePath>$(DXSDK_DIR)Utilities\bin\x86;$(ExecutablePath)</ExecutablePath>
     <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
-    <OutDir>..\..\bin\$(Configuration)\</OutDir>
+    <OutDir>..\..\bin\$(ProjectName)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|X64'">
     <LinkIncremental>true</LinkIncremental>
@@ -104,7 +104,7 @@
     <ExecutablePath>$(DXSDK_DIR)Utilities\bin\x86;$(ExecutablePath)</ExecutablePath>
     <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
-    <OutDir>..\..\bin\$(Configuration)\</OutDir>
+    <OutDir>..\..\bin\$(ProjectName)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|X64'">
     <LinkIncremental>false</LinkIncremental>
@@ -119,7 +119,7 @@
     <ExecutablePath>$(DXSDK_DIR)Utilities\bin\x86;$(ExecutablePath)</ExecutablePath>
     <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
-    <OutDir>..\..\bin\$(Configuration)\</OutDir>
+    <OutDir>..\..\bin\$(ProjectName)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|X64'">
     <LinkIncremental>false</LinkIncremental>
@@ -163,8 +163,7 @@
       <EnableDPIAwareness>true</EnableDPIAwareness>
     </Manifest>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy /Y "$(ASSIMP_DIR)source\$(Configuration)\assimp-vc120.dll" "..\..\bin\$(ProjectName)\$(Configuration)\assimp-vc120.dll"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -247,8 +246,7 @@
       <EnableDPIAwareness>true</EnableDPIAwareness>
     </Manifest>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy /Y "$(ASSIMP_DIR)source\$(Configuration)\assimp-vc120.dll" "..\..\bin\$(ProjectName)\$(Configuration)\assimp-vc120.dll"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -333,8 +331,7 @@
       <EnableDPIAwareness>true</EnableDPIAwareness>
     </Manifest>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy /Y "$(ASSIMP_DIR)source\$(Configuration)\assimp-vc120.dll" "..\..\bin\$(ProjectName)\$(Configuration)\assimp-vc120.dll"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
