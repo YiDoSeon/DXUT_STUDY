@@ -9,6 +9,9 @@
       <UniqueIdentifier>{2c3d4c8c-5d1a-459a-a05a-a4e4b608a44e}</UniqueIdentifier>
       <Extensions>fx;fxh;hlsl</Extensions>
     </Filter>
+    <Filter Include="BVL">
+      <UniqueIdentifier>{1e8aa4b7-d46e-419c-86fb-fb88a1519710}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -17,6 +20,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework.cpp" />
+    <ClCompile Include="BandiVideoFileReader.cpp">
+      <Filter>BVL</Filter>
+    </ClCompile>
+    <ClCompile Include="BandiVideoLibrary.cpp">
+      <Filter>BVL</Filter>
+    </ClCompile>
+    <ClCompile Include="BandiVideoSound_DS.cpp">
+      <Filter>BVL</Filter>
+    </ClCompile>
+    <ClCompile Include="BandiVideoSound_NULL.cpp">
+      <Filter>BVL</Filter>
+    </ClCompile>
+    <ClCompile Include="BandiVideoTexture_DX9.cpp">
+      <Filter>BVL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\assets\Icon\GameIcon.ico">
@@ -36,6 +54,27 @@
     <ResourceCompile Include="Framework.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+    <ClInclude Include="BandiVideoFileReader.h">
+      <Filter>BVL</Filter>
+    </ClInclude>
+    <ClInclude Include="BandiVideoLibrary.h">
+      <Filter>BVL</Filter>
+    </ClInclude>
+    <ClInclude Include="BandiVideoSound_DS.h">
+      <Filter>BVL</Filter>
+    </ClInclude>
+    <ClInclude Include="BandiVideoSound_NULL.h">
+      <Filter>BVL</Filter>
+    </ClInclude>
+    <ClInclude Include="BandiVideoTexture.h">
+      <Filter>BVL</Filter>
+    </ClInclude>
+    <ClInclude Include="BandiVideoTexture_DX9.h">
+      <Filter>BVL</Filter>
+    </ClInclude>
+    <ClInclude Include="bandivid.h">
+      <Filter>BVL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

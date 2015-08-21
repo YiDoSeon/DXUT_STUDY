@@ -5,7 +5,12 @@
 //--------------------------------------------------------------------------------------
 #include "DXUT.h"
 #include "resource.h"
+#include "BandiVideoLibrary.h"
+#include "BandiVideoTexture_DX9.h"
 
+CBandiVideoLibrary  g_bvl;
+CBandiVideoTexture* g_bvt = NULL;
+BVL_VIDEO_INFO      g_info;
 
 //--------------------------------------------------------------------------------------
 // Rejects any D3D9 devices that aren't acceptable to the app by returning false
@@ -40,6 +45,18 @@ bool CALLBACK ModifyDeviceSettings( DXUTDeviceSettings* pDeviceSettings, void* p
 HRESULT CALLBACK OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
                                      void* pUserContext )
 {
+	g_bvl.Create(BANDIVIDEO_DLL_FILE_NAME, NULL, NULL);
+
+	if (SUCCEEDED(g_bvl.Open(L"Videos/sample.avi", FALSE)))
+	{
+		BV_DEVICE_DX9 bvd = { DXUTGetD3D9Object(), DXUTGetD3D9Device(), DXUTGetHWND() };
+		g_bvl.GetVideoInfo(g_info);
+
+		g_bvt = new CBandiVideoTexture_DX9(&bvd);
+		g_bvt->Open(g_info.width, g_info.height);
+		g_bvl.Play();
+	}
+
     return S_OK;
 }
 
@@ -76,6 +93,31 @@ void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, double fTime, flo
     // Render the scene
     if( SUCCEEDED( pd3dDevice->BeginScene() ) )
     {
+		if (g_bvl.IsNextFrame())
+		{
+			INT pitch;
+			BYTE* buf = g_bvt->Lock(pitch);
+			if (buf)
+			{
+				// Get frame
+				BVL_FRAME frame;
+				frame.frame_buf = buf;
+				frame.frame_buf_size = g_info.height*pitch;
+				frame.pitch = pitch;
+				frame.width = g_info.width;
+				frame.height = g_info.height;
+				frame.pixel_format = BVLPF_X8R8G8B8;
+
+				g_bvl.GetFrame(frame, TRUE);
+
+				g_bvt->Unlock();
+
+				// Draw frame
+				g_bvt->Draw(0, 0, g_info.width, g_info.height);
+			}
+		}
+
+
         V( pd3dDevice->EndScene() );
     }
 }
@@ -87,6 +129,9 @@ void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, double fTime, flo
 LRESULT CALLBACK MsgProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,
                           bool* pbNoFurtherProcessing, void* pUserContext )
 {
+	
+	
+
     return 0;
 }
 
@@ -104,6 +149,14 @@ void CALLBACK OnD3D9LostDevice( void* pUserContext )
 //--------------------------------------------------------------------------------------
 void CALLBACK OnD3D9DestroyDevice( void* pUserContext )
 {
+	g_bvl.Destroy();
+
+	if (g_bvt)
+	{
+		g_bvt->Close();
+		delete g_bvt;
+	}
+
 }
 
 
@@ -137,7 +190,7 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )
 	HICON hIcon = (HICON)LoadImage(NULL, L"Icon\\icon2.ico", IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
 	
     DXUTCreateWindow( L"Framework" ,NULL,hIcon );
-    DXUTCreateDevice( true, 640, 480 );
+    DXUTCreateDevice( true, 1024, 768);
 
     // Start the render loop
     DXUTMainLoop();
