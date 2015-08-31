@@ -36,7 +36,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|X64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -89,7 +89,7 @@
     <LinkIncremental>true</LinkIncremental>
     <GenerateManifest>true</GenerateManifest>
     <ExecutablePath>$(DXSDK_DIR)Utilities\bin\x86;$(ExecutablePath)</ExecutablePath>
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(DXSDK_DIR)Include;D:\SDKs\libtheoraplayer_sdk_1.1.0\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
     <OutDir>..\..\bin\$(ProjectName)\$(Configuration)\</OutDir>
   </PropertyGroup>
@@ -150,7 +150,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>DXUT.lib;DXUTOpt.lib;d3dx10d.lib;d3dx9d.lib;d3d9.lib;Dsound.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DXUT.lib;DXUTOpt.lib;d3dx10d.lib;d3dx9d.lib;d3d9.lib;Dsound.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;libtheoraplayer.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <LargeAddressAware>true</LargeAddressAware>
@@ -159,14 +159,13 @@
       <TargetMachine>MachineX86</TargetMachine>
       <UACExecutionLevel>AsInvoker</UACExecutionLevel>
       <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
-      <AdditionalLibraryDirectories>..\..\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\lib\$(Configuration);D:\SDKs\libtheoraplayer_sdk_1.1.0\lib\WinRT\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Manifest>
       <EnableDPIAwareness>true</EnableDPIAwareness>
     </Manifest>
     <PreBuildEvent>
-      <Command>copy /Y "$(ASSIMP_DIR)source\$(Configuration)\assimp-vc120.dll" "..\..\bin\$(ProjectName)\$(Configuration)\assimp-vc120.dll"
-copy /Y "$(BVL_DIR)bin\bdvid32.dll" "..\..\bin\$(ProjectName)\$(Configuration)\bdvid32.dll"</Command>
+      <Command>copy /Y "$(ASSIMP_DIR)source\$(Configuration)\assimp-vc120.dll" "..\..\bin\$(ProjectName)\$(Configuration)\assimp-vc120.dll"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -390,11 +389,6 @@ copy /Y "$(BVL_DIR)bin\bdvid32.dll" "..\..\bin\$(ProjectName)\$(Configuration)\b
     <None Include="DXUT\Optional\directx.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BandiVideoFileReader.cpp" />
-    <ClCompile Include="BandiVideoLibrary.cpp" />
-    <ClCompile Include="BandiVideoSound_DS.cpp" />
-    <ClCompile Include="BandiVideoSound_NULL.cpp" />
-    <ClCompile Include="BandiVideoTexture_DX9.cpp" />
     <ClCompile Include="Framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">Create</PrecompiledHeader>
@@ -407,13 +401,6 @@ copy /Y "$(BVL_DIR)bin\bdvid32.dll" "..\..\bin\$(ProjectName)\$(Configuration)\b
     <Image Include="..\..\assets\icon\icon2.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bandivid.h" />
-    <ClInclude Include="BandiVideoFileReader.h" />
-    <ClInclude Include="BandiVideoLibrary.h" />
-    <ClInclude Include="BandiVideoSound_DS.h" />
-    <ClInclude Include="BandiVideoSound_NULL.h" />
-    <ClInclude Include="BandiVideoTexture.h" />
-    <ClInclude Include="BandiVideoTexture_DX9.h" />
     <CLInclude Include="resource.h" />
     <ResourceCompile Include="Framework.rc" />
   </ItemGroup>

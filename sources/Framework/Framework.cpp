@@ -5,12 +5,15 @@
 //--------------------------------------------------------------------------------------
 #include "DXUT.h"
 #include "resource.h"
-#include "BandiVideoLibrary.h"
-#include "BandiVideoTexture_DX9.h"
+#include <theoraplayer/TheoraPlayer.h>
 
-CBandiVideoLibrary  g_bvl;
-CBandiVideoTexture* g_bvt = NULL;
-BVL_VIDEO_INFO      g_info;
+unsigned int tex_id;
+TheoraVideoManager* g_mgr;
+TheoraVideoClip* g_clip = NULL;
+
+LPDIRECT3DTEXTURE9 g_pTex;
+
+
 
 //--------------------------------------------------------------------------------------
 // Rejects any D3D9 devices that aren't acceptable to the app by returning false
@@ -45,18 +48,11 @@ bool CALLBACK ModifyDeviceSettings( DXUTDeviceSettings* pDeviceSettings, void* p
 HRESULT CALLBACK OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
                                      void* pUserContext )
 {
-	g_bvl.Create(BANDIVIDEO_DLL_FILE_NAME, NULL, NULL);
-
-	if (SUCCEEDED(g_bvl.Open(L"Videos/sample.avi", FALSE)))
-	{
-		BV_DEVICE_DX9 bvd = { DXUTGetD3D9Object(), DXUTGetD3D9Device(), DXUTGetHWND() };
-		g_bvl.GetVideoInfo(g_info);
-
-		g_bvt = new CBandiVideoTexture_DX9(&bvd);
-		g_bvt->Open(g_info.width, g_info.height);
-		g_bvl.Play();
-	}
-
+	g_mgr = new TheoraVideoManager();
+	g_clip = g_mgr->createVideoClip("Videos/GameIntro.ogv", TH_RGB);
+	g_clip->play();
+	pd3dDevice->CreateTexture(g_clip->getWidth(), g_clip->getHeight(), 1, 0, D3DFMT_X8R8G8B8, D3DPOOL_MANAGED, &g_pTex, NULL);
+	
     return S_OK;
 }
 
@@ -77,6 +73,7 @@ HRESULT CALLBACK OnD3D9ResetDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFA
 //--------------------------------------------------------------------------------------
 void CALLBACK OnFrameMove( double fTime, float fElapsedTime, void* pUserContext )
 {
+	g_mgr->update(fElapsedTime);
 }
 
 
@@ -93,31 +90,19 @@ void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, double fTime, flo
     // Render the scene
     if( SUCCEEDED( pd3dDevice->BeginScene() ) )
     {
-		if (g_bvl.IsNextFrame())
+		/*unsigned char* pVideoFrameBuffer = NULL;
+		TheoraVideoFrame* pFrame = g_clip->getNextFrame();
+		if (pFrame)
 		{
-			INT pitch;
-			BYTE* buf = g_bvt->Lock(pitch);
-			if (buf)
-			{
-				// Get frame
-				BVL_FRAME frame;
-				frame.frame_buf = buf;
-				frame.frame_buf_size = g_info.height*pitch;
-				frame.pitch = pitch;
-				frame.width = g_info.width;
-				frame.height = g_info.height;
-				frame.pixel_format = BVLPF_X8R8G8B8;
-
-				g_bvl.GetFrame(frame, TRUE);
-
-				g_bvt->Unlock();
-
-				// Draw frame
-				g_bvt->Draw(0, 0, g_info.width, g_info.height);
-			}
+			pVideoFrameBuffer = pFrame->getBuffer();
+			g_clip->popFrame();
+			RECT rect = { 0, 0, 0, 0 };
+			D3DLOCKED_RECT lockedRect = { 0 };
+			g_pTex->LockRect(0, &lockedRect, &rect, 0);
+			lockedRect.pBits = pVideoFrameBuffer;
 		}
-
-
+		g_pTex->UnlockRect(0);
+		g_mgr->update(0.016f);*/
         V( pd3dDevice->EndScene() );
     }
 }
@@ -149,12 +134,9 @@ void CALLBACK OnD3D9LostDevice( void* pUserContext )
 //--------------------------------------------------------------------------------------
 void CALLBACK OnD3D9DestroyDevice( void* pUserContext )
 {
-	g_bvl.Destroy();
-
-	if (g_bvt)
+	if (g_pTex)
 	{
-		g_bvt->Close();
-		delete g_bvt;
+		g_pTex->Release();
 	}
 
 }
