@@ -90,7 +90,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="Tutorial_Primitive.cpp" />
   </ItemGroup>
   <ItemGroup>
