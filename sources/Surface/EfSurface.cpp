@@ -66,8 +66,8 @@ void CEfSurface::Destroy()
 INT CEfSurface::Restore(LPDIRECT3DDEVICE9 pDev)
 {
 	// 텍스처 해상도?
-	//pDev->CreateTexture(1024, 768, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &m_pTx, NULL);
-	pDev->CreateTexture(1024, 768, 1, D3DUSAGE_DYNAMIC, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &m_pTx, NULL);
+	pDev->CreateTexture(1024, 768, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &m_pTx, NULL);
+	//pDev->CreateTexture(1024, 768, 1, D3DUSAGE_DYNAMIC, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &m_pTx, NULL);
 	m_pTx->GetSurfaceLevel(0, &m_pSf);
 
 	return 0;
@@ -83,9 +83,9 @@ void CEfSurface::Invalidate()
 INT CEfSurface::FrameMove(LPDIRECT3DDEVICE9 pDev, float _elapsedTime)
 {
 
-	ProcessFrames();
+	//ProcessFrames();
 
-	m_Vmgr->update(_elapsedTime);
+	//m_Vmgr->update(_elapsedTime);
 	HRESULT hr = 0;
 
 	pDev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
@@ -105,16 +105,16 @@ INT CEfSurface::FrameMove(LPDIRECT3DDEVICE9 pDev, float _elapsedTime)
 	LPDIRECT3DSURFACE9 pSfOrgD = NULL;	// Back Buffer Depth and Stencil
 	LPDIRECT3DSURFACE9 pSfOrgT = NULL;	// Back Buffer target;
 
-	/*hr = pDev->GetRenderTarget(0, &pSfOrgT);
+	hr = pDev->GetRenderTarget(0, &pSfOrgT);
 	hr = pDev->GetDepthStencilSurface(&pSfOrgD);
-	hr = pDev->SetRenderTarget(0, m_pSf);*/
+	hr = pDev->SetRenderTarget(0, m_pSf);
 
 	hr = pDev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0xFF006699, 1.0f, NULL);
 
 	m_pMesh->DrawSubset(0);
 
-	//hr = pDev->SetRenderTarget(0, pSfOrgT);										//렌더 타겟을 원래 대로.
-	//hr = pDev->SetDepthStencilSurface(pSfOrgD);
+	hr = pDev->SetRenderTarget(0, pSfOrgT);										//렌더 타겟을 원래 대로.
+	hr = pDev->SetDepthStencilSurface(pSfOrgD);
 
 	SAFE_RELEASE(pSfOrgT);
 	SAFE_RELEASE(pSfOrgD);
