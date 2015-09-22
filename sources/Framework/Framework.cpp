@@ -7,6 +7,8 @@
 #include "resource.h"
 #include <theoraplayer/TheoraPlayer.h>
 
+
+
 unsigned int tex_id;
 TheoraVideoManager* g_mgr;
 TheoraVideoClip* g_clip = NULL;
@@ -115,7 +117,6 @@ LRESULT CALLBACK MsgProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,
                           bool* pbNoFurtherProcessing, void* pUserContext )
 {
 	
-	
 
     return 0;
 }
@@ -178,7 +179,6 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )
     DXUTMainLoop();
 
     // TODO: Perform any application-level cleanup here
-
     return DXUTGetExitCode();
 }
 

@@ -60,6 +60,14 @@
 #endif
 #endif
 
+
+
+//#ifdef _DEBUG
+//
+//#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+//
+//#endif
+
 // Standard Windows includes
 #include <windows.h>
 #include <initguid.h>
